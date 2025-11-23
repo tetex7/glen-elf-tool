@@ -54,7 +54,11 @@ static void help(po::options_description& desc)
     cout_print("    K_LOADER_MK_VMS (informs the loader to prepare provisional Virtual memory space)\n");
     cout_print("    K_LOADER_NO_LOADER_FEATURES (Request no features)\n");
     cout_print("\n");
-    cout_print("version: ", GLEN_ELF_TOOL_CONFIG_STR_VERSION, '\n');
+    cout_print("version:   ", GLEN_ELF_TOOL_CONFIG_STR_VERSION, '\n');
+    cout_print("Built for: ", GLEN_ELF_TOOL_SYSTEM_BUILT_FOR, '\n');
+    cout_print("Commit:    ", GLEN_ELF_TOOL_GIT_COMMIT_HASH, '\n');
+    cout_print("Branch:    ", GLEN_ELF_TOOL_GIT_BRANCH_NAME, '\n');
+    cout_print("Compiler:  ", GLEN_ELF_TOOL_C_COMPILER, '\n');
     cout_print(REP_BUG_TEXT, '\n');
 }
 
@@ -109,12 +113,12 @@ int main(int argc, const char** argv)
     po::options_description desc("glen_elf_tool options"s);
     desc.add_options()
     ("help,h", "produce help message")
-    ("elf", po::value<std::string>()->value_name("path"s), "path to kernel elf (Required)")
-    ("vid", po::value<Elf64_Half>()->value_name("kversion"s), "The kernel version ID")
+    ("elf,e", po::value<std::string>()->value_name("path"s), "path to kernel elf (Required)")
+    ("vid,v", po::value<Elf64_Half>()->value_name("kversion"s), "The kernel version ID")
     ("k-type,t", po::value<std::string>()->value_name("ktype"s), "kernel identification")
     ("loader-feature,f", po::value<std::vector<std::string>>()->composing()->value_name("feature"), "Used by the loader to perform special actions for the kernel")
-    ("ignore-elf-magic", "Remove the requirement for elf magic")
-    ("info", "Dumps info about the ELF");
+    ("ignore-elf-magic,m", "Remove the requirement for elf magic")
+    ("info,i", "Dumps info about the ELF");
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
